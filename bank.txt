@@ -1,0 +1,104 @@
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+int req[10],nn,pn,i,j,st[20],s,rn,finish[20],sum[20],count1=0,count=0,alloc[20][20],
+max[20][20],need[20][20],avail[10];
+charsel;
+printf("enter no. of process");
+scanf("%d",&pn);
+printf("enter no. of resources");
+scanf("%d",&rn);
+for(i=0;i<pn;i++)
+finish[i]=0;
+printf("enter the allocated resources");
+for(i=0;i<pn;i++)
+for(j=0;j<rn;j++)
+scanf("%d",&alloc[i][j]);
+printf("enter the max resources");
+for(i=0;i<pn;i++)
+for(j=0;j<rn;j++)
+{
+scanf("%d",&max[i][j]);
+need[i][j]=max[i][j]-alloc[i][j];
+}
+printf("availability of resource is");
+for(i=0; i<rn; i++)
+scanf("%d",&avail[i]);
+for(i=0;i<rn;i++)
+{
+sum[i]=0;
+for(j=0;j<pn;j++)
+sum[i]=sum[i]+alloc[j][i];
+avail[i]=avail[i]-sum[i];
+}
+printf("Any immediate process");
+sel=getch();
+if(sel=='y')
+{
+printf("how much they eed and which process");
+for(i=0;i<rn;i++)
+scanf("%d",&req[i]);
+scanf("%d",&nn);
+count1=0;
+for(j=0;j<rn;j++)
+{
+if(req[j]<=need[nn][j])
+count1++;
+}
+if(count1==3)
+{
+count1=0;
+for(j=0;j<rn;j++)
+{
+if(req[j]<=avail[j])
+count1++;
+}
+if(count1==3)
+{
+bank++;
+printf("process %d is allocated",nn);
+printf("\n new avail of this allocated process is");
+for(j=0;j<rn;j++)
+{
+alloc[nn][j]=alloc[nn][j]+req[j];
+need[nn][j]=need[nn][j]-req[j];
+avail[j]=avail[j]-req[j];
+printf("\t%d",avail[j]);
+}
+}
+else
+printf("process want to wait");
+}
+else printf("error cannot allocate");
+}
+i=0;s=0;
+while(count<pn)
+{
+count1=0;
+if(i>=pn)
+i=0;
+if(finish[i]==0)
+{
+for(j=0;j<rn;j++)
+{
+if(need[i][j]<=avail[j])
+count1++;
+}
+if(count1==rn)
+{
+finish[i]=1;
+st[s]=i;s++;
+count++;
+for(j=0;j<rn;j++)
+{
+avail[j]=avail[j]+alloc[i][j];
+}
+}
+i++;
+}
+printf("\nsafe state is");
+for(i=0;i<pn;i++)
+printf(" %d ",st[i]);
+getch();
+}
