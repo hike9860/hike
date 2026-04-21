@@ -1,0 +1,26 @@
+import time
+import matplotlib.pyplot as plt
+
+def linear_search(arr, x):
+    for i in range(len(arr)):
+        if arr[i] == x:
+            return i
+    return -1
+
+def run_experiment(n):
+    arr = list(range(n))
+    x = n - 1
+    start = time.time()
+    result = linear_search(arr, n)
+    end = time.time()
+    print(n, ":", end - start, "is the time taken")
+    return (end - start)
+
+ns = [10, 100, 1000, 10000, 100000, 1000000]
+times = [run_experiment(n) for n in ns]
+
+plt.plot(ns, times)
+plt.xlabel("n")
+plt.ylabel("times(n)")
+plt.title("Time taken for linear search")
+plt.show()

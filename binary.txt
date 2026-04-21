@@ -1,0 +1,32 @@
+import time
+import matplotlib.pyplot as plt
+
+def binary_search(arr, low, high, x):
+    if low <= high:
+        mid = (low + high) // 2
+        if (arr[mid] == x):
+            return mid
+        elif arr[mid] < x:
+            return binary_search(arr, mid + 1, high, x)
+        else:
+            return binary_search(arr, low, mid - 1, x)
+    else:
+        return -1
+
+def run_experiment(n):
+    arr = list(range(n))
+    x = n - 1
+    start_time = time.time()
+    result = binary_search(arr, 0, n - 1, x)
+    end_time = time.time()
+    print(n, ":", end_time - start_time, "is the time taken")
+    return (end_time - start_time)
+
+ns = [10, 100, 1000, 10000, 100000]
+times = [run_experiment(n) for n in ns]
+
+plt.plot(ns, times)
+plt.xlabel("n")
+plt.ylabel("times(s)")
+plt.title("time taken for binary search")
+plt.show()
